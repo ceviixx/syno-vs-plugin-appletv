@@ -1,0 +1,1 @@
+# synology-videostation-plugin
