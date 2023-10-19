@@ -1,7 +1,7 @@
 # Synology Video Station Plugin
 An Synology Video Station Plugin to fetch movie metdata from the `Apple TV`-API.
 
-Synology Video Station Plugin Docu can be find [here](https://download.synology.com/download/Document/Software/DeveloperGuide/Package/VideoStation/All/enu/Synology_Video_Station_API_enu.pdf).
+**Synology Video Station Plugin Docu can be find [here](https://download.synology.com/download/Document/Software/DeveloperGuide/Package/VideoStation/All/enu/Synology_Video_Station_API_enu.pdf).**
 
 
 **If you have found an bug or need help, feel free and create an issue**
