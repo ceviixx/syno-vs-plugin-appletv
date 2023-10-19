@@ -1,0 +1,15 @@
+{
+	"id": "com.ceviixx",
+	"description": "Load the metadata from the AppleTV Api",
+	"version": "1.1",
+	"site": "http://10.0.0.2:8080",
+	"entry_file": "loader.sh",
+	"type": ["movie"],
+	"language": ["de-DE"],
+	"test_example": {
+		"movie": {
+			"title": "Harry Potter und der Stein der Weisen",
+			"original_available": "2001-11-16"
+		}
+	}
+}
