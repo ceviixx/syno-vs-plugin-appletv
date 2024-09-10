@@ -45,7 +45,8 @@ def movieMeta(searchString, langCode, locale):
             # detailUrl = "https://tv.apple.com/api/uts/v2/view/product/{}/?utscf=OjAAAAAAAAA~&utsk=000000000000000000&caller=web&sf=143443&v=40&pfm=web&locale={}".format(entryId, locale)
             # detailData = requests.get(detailUrl)
             
-            releaseDate = str(datetime.datetime.fromtimestamp( ( item["releaseDate"] / 1000 ) ))
+            releaseDate = datetime.datetime.fromtimestamp( ( item["releaseDate"] / 1000 ) )
+            releaseDate = releaseDate.strftime('%Y-%m-%d')
 
             posterUrl = item["images"]["coverArt"]["url"]
             posterUrl = posterUrl.replace("{w}", "300" )
@@ -71,8 +72,8 @@ def movieMeta(searchString, langCode, locale):
             synoEntryItem = {
                 "title": item["title"],
                 "tagline": "",
-                "original_available": "2024-01-01",
-                "original_title": "TITLE",
+                "original_available": releaseDate,
+                "original_title": item["title"],
                 "summary": item["description"],
                 "certificate": "FSK12",
                 "genre": ["GENRE"],
