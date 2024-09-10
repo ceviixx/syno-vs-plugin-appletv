@@ -1,5 +1,4 @@
 import argparse
-import sys
 import json
 import requests
 import datetime
@@ -18,8 +17,33 @@ def getLangCode(value):
 
 
 
-
-
+def errorData():
+    synoRes = []
+    synoExtraItem = {
+        "com.ceviixx": {
+            "rating": {
+                "com.ceviixx": 10.0
+            },
+            "poster": ["https://localhost/test.jpg"],
+            "backdrop": ["https://localhost/test.jpg"]
+        }
+    }
+    synoEntryItem = {
+        "title": "ERROR",
+        "tagline": "",
+        "original_available": "1970-01-01",
+        "original_title": "ERROR",
+        "summary": "ERROR",
+        "certificate": "",
+        "genre": ["GENRE"],
+        "actor": ["ACTOR"],
+        "director": ["DIRECTOR"],
+        "writer": ["WRITER"],
+        "extra": synoExtraItem
+    }
+    
+    synoRes.append(synoEntryItem)
+    return synoRes
 
 
 def movieMeta(searchString, langCode, locale):
@@ -28,7 +52,6 @@ def movieMeta(searchString, langCode, locale):
     result = requests.get(url)
     shelves = result.json()["data"]["canvas"]["shelves"]
 
-    print(url)
     synoRes = []
 
     for item in shelves:
@@ -42,9 +65,6 @@ def movieMeta(searchString, langCode, locale):
             if ".bun." in entryId:
                 continue
 
-            # detailUrl = "https://tv.apple.com/api/uts/v2/view/product/{}/?utscf=OjAAAAAAAAA~&utsk=000000000000000000&caller=web&sf=143443&v=40&pfm=web&locale={}".format(entryId, locale)
-            # detailData = requests.get(detailUrl)
-            
             releaseDate = datetime.datetime.fromtimestamp( ( item["releaseDate"] / 1000 ) )
             releaseDate = releaseDate.strftime('%Y-%m-%d')
 
@@ -67,15 +87,13 @@ def movieMeta(searchString, langCode, locale):
                     "backdrop": [backdropUrl]
                 }
             }
-
-            # original_available > releaseDate
             synoEntryItem = {
                 "title": item["title"],
                 "tagline": "",
                 "original_available": releaseDate,
                 "original_title": item["title"],
                 "summary": item["description"],
-                "certificate": "FSK12",
+                "certificate": item["rating"]["displayName"],
                 "genre": ["GENRE"],
                 "actor": ["ACTOR"],
                 "director": ["DIRECTOR"],
@@ -93,7 +111,10 @@ def movieMeta(searchString, langCode, locale):
 
 
 
-def main(type: str, language: str, input, limit: int, allowguess: bool):
+
+
+
+def main(type, language: str, input, limit: int, allowguess: bool):
     locale = getLocale(language)
     langCode = getLangCode(language)
 
@@ -103,10 +124,11 @@ def main(type: str, language: str, input, limit: int, allowguess: bool):
     data = json.loads(loaded_r)
     searchString = data['title']
     searchString = searchString.replace(' ', '+')
+
     if type == "movie":
         return movieMeta(searchString, langCode, locale)
     else:
-        return "No results"
+        return errorData()
 
 
 
@@ -154,8 +176,6 @@ if __name__ == '__main__':
         "extra": synoExtraItem
     }
 
-    
-
     result = []
 
     if "--setup" in args.input:
@@ -169,6 +189,5 @@ if __name__ == '__main__':
         "result": result
     }
 
-    #loaded_r = json.dumps(result, indent=2)
     loaded_r = json.dumps(result, ensure_ascii=False, separators=(',', ':'), indent=2)
     print(loaded_r)
