@@ -1,7 +1,7 @@
 # Synology Video Station Plugin
 An Synology Video Station Plugin to fetch movie metdata from the **Apple TV**-API.
 
-# Test & build
+### Test & build
 ```
 tar --no-xattrs -cvf com.ceviixx.tar com.ceviixx
 ```
