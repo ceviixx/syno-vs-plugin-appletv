@@ -3,27 +3,16 @@ import datetime
 
 
 def setupData():
-    synoExtraItem = {
-        "com.ceviixx": {
-            "rating": {
-                "com.ceviixx": 2.0
-            },
-            "poster": ["http://localhost.com/test.jpg"],
-            "backdrop": ["http://localhost.com/test.jpg"]
-        }
-    }
     synoEntryItem = {
         "title": "TITLE",
         "tagline": "",
         "original_available": "2024-01-01",
         "original_title": "TITLE",
         "summary": "DESCRIPTION",
-        "certificate": "FSK12",
-        "genre": ["GENRE"],
-        "actor": ["ACTOR"],
-        "director": ["DIRECTOR"],
-        "writer": ["WRITER"],
-        "extra": synoExtraItem
+        "genre": ["Unknown"],
+        "actor": ["Unknown"],
+        "director": ["Unknown"],
+        "writer": ["Unknown"]
     }
     return [synoEntryItem]
 
@@ -123,9 +112,9 @@ def detailsFor(entryId):
     backdrop = _parseBackdrop(images)
 
     synoExtraItem = {
-        "com.ceviixx": {
+        "com.appletv": {
             "rating": {
-                "com.ceviixx": rating
+                "com.rottentomatoes": rating
             },
             "poster": poster,
             "backdrop": backdrop

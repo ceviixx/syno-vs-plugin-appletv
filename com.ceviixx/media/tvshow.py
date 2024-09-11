@@ -2,18 +2,17 @@ import requests
 import datetime
 
 def setupData():
-    synoExtraItem = {
-        "com.ceviixx": {
-            "poster": ["http://localhost.com/test.jpg"],
-            "backdrop": ["http://localhost.com/test.jpg"]
-        }
-    }
     synoEntryItem = {
-        "title": "TITLE",
-        "original_available": "2024-01-01",
-        "original_title": "TITLE",
-        "summary": "DESCRIPTION",
-        "extra": synoExtraItem
+        "title": "title",
+        "original_available": "1970-01-01",
+        "original_title": "title",
+        "summary": "summary",
+        "extra": {
+            "con.synology.TheMovieDB": {
+                "poster": ["http://localhost/test.jpg"],
+                "backdrop": ["http://localhost/test.jpg"]
+            }
+        }
     }
     return [synoEntryItem]
 
@@ -21,9 +20,9 @@ def setupData():
 def metaData(searchString, season, episode, langCode, locale):
     synoRes = []
     synoExtraItem = {
-        "com.ceviixx": {
+        "com.appletv": {
             "rating": {
-                "com.ceviixx": 10.0
+                "com.rottentomatoes": 10.0
             },
             "poster": ["https://localhost/test.jpg"],
             "backdrop": ["https://localhost/test.jpg"]

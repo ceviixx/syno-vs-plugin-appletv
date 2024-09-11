@@ -1,60 +1,18 @@
 import argparse
 import json
-import requests
-import datetime
 
 from media import movie
 from media import tvshow
 from media import tvshow_episode
 
-def getLocale(value):
-    if value == "ger":
-        return "de-DE"
-    else:
-        return "-"
-
-def getLangCode(value):
-    if value == "ger":
-        return "143443"
-    else:
-        return "-"
-
-def errorData():
-    synoRes = []
-    synoExtraItem = {
-        "com.ceviixx": {
-            "rating": {
-                "com.ceviixx": 10.0
-            },
-            "poster": ["https://localhost/test.jpg"],
-            "backdrop": ["https://localhost/test.jpg"]
-        }
-    }
-    synoEntryItem = {
-        "title": "ERROR",
-        "tagline": "",
-        "original_available": "1970-01-01",
-        "original_title": "ERROR",
-        "summary": "ERROR",
-        "certificate": "",
-        "genre": ["GENRE"],
-        "actor": ["ACTOR"],
-        "director": ["DIRECTOR"],
-        "writer": ["WRITER"],
-        "extra": synoExtraItem
-    }
-    
-    synoRes.append(synoEntryItem)
-    return synoRes
-
-
+import helper
 
 
 
 
 def main(type, language: str, input, limit: int, allowguess: bool):
-    locale = getLocale(language)
-    langCode = getLangCode(language)
+    locale = helper.getLocale(language)
+    langCode = helper.getLangCode(language)
 
     r = json.dumps(input)
     loaded_r = json.loads(r)
@@ -68,34 +26,10 @@ def main(type, language: str, input, limit: int, allowguess: bool):
     elif type == "tvshow":
         return tvshow.metaData(searchString, "1", "1", langCode, locale)
     else:
-        return errorData()
+        return helper.errorData()
 
 
 
-def setupData(requestType):
-    synoExtraItem = {
-        "com.ceviixx": {
-            "rating": {
-                "com.ceviixx": 2.0
-            },
-            "poster": ["http://localhost.com/test.jpg"],
-            "backdrop": ["http://localhost.com/test.jpg"]
-        }
-    }
-    synoEntryItem = {
-        "title": requestType,
-        "tagline": "",
-        "original_available": "2024-01-01",
-        "original_title": "TITLE",
-        "summary": "DESCRIPTION",
-        "certificate": "FSK12",
-        "genre": ["GENRE"],
-        "actor": ["ACTOR"],
-        "director": ["DIRECTOR"],
-        "writer": ["WRITER"],
-        "extra": synoExtraItem
-    }
-    return [synoEntryItem]
 
 
 
@@ -130,8 +64,7 @@ if __name__ == '__main__':
         elif args.type == "tvshow_episode":
             result = tvshow_episode.setupData()
         else:
-            result = setupData(args.type)
-            print(args.type)
+            result = helper.errorDataDisplay(args.type)
     else:
         data = main(args.type, args.lang, args.input, args.limit, args.allowguess)
         result = data

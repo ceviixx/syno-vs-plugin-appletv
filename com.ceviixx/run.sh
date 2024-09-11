@@ -16,15 +16,6 @@ while [ $i -le $# ]; do
 	i=`expr $i + 1`
 done
 
-#echo $ARGV;
-
-#eval "/usr/bin/env python3 "\
-#	"$BASEDIR/search.py $ARGV"
-
-#eval "/usr/bin/env php "\
-#	"$BASEDIR/search.php $ARGV"
-
-
 
 eval "/usr/bin/env python3 "\
 	"$BASEDIR/search.py $ARGV"

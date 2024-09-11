@@ -3,9 +3,6 @@ An Synology Video Station Plugin to fetch movie metadata from the **Apple TV**-A
 
 ### Test & build
 ```
-tar --no-xattrs -cvf com.ceviixx.tar com.ceviixx
-```
-```
 sh com.ceviixx/run.sh  \
     --type movie \
     --lang ger \
@@ -13,6 +10,11 @@ sh com.ceviixx/run.sh  \
     --limit 1 \
     --allowguess false
 ```
+
+```
+tar --no-xattrs -cvf com.ceviixx.tar com.ceviixx
+```
+
 
 
 ### Supported media types
