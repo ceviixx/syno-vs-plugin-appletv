@@ -16,7 +16,6 @@ sh com.ceviixx/loader.sh  --type movie --lang ger --input "{\"title\":\"Toy Stor
 ## Supported media types
 - [x] Movies
 - [ ] TV-Shows
-- [ ] TV-Episodes
 
 
 ## Supported languages

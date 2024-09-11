@@ -3,6 +3,10 @@ import json
 import requests
 import datetime
 
+from media import movie
+from media import tvshow
+from media import tvshow_episode
+
 def getLocale(value):
     if value == "ger":
         return "de-DE"
@@ -14,8 +18,6 @@ def getLangCode(value):
         return "143443"
     else:
         return "-"
-
-
 
 def errorData():
     synoRes = []
@@ -46,70 +48,6 @@ def errorData():
     return synoRes
 
 
-def movieMeta(searchString, langCode, locale):
-    # langCode - locale, title
-    url = "https://uts-api.itunes.apple.com/uts/v2/search/incremental?sf={}&locale={}&caller=wta&utsk=0893ae2c4df5b61%3A%3A%3A%3A%3A%3Ac5a7986b1ef4302&v=34&pfm=desktop&q={}".format(langCode, locale, searchString)
-    result = requests.get(url)
-    shelves = result.json()["data"]["canvas"]["shelves"]
-
-    synoRes = []
-
-    for item in shelves:
-        type = item["id"] # uts.col.search.MV
-        if type == "uts.col.search.SH":
-            continue
-
-        items = item["items"]
-        for item in items:
-            entryId = item["id"]
-            if ".bun." in entryId:
-                continue
-
-            releaseDate = datetime.datetime.fromtimestamp( ( item["releaseDate"] / 1000 ) )
-            releaseDate = releaseDate.strftime('%Y-%m-%d')
-
-            posterUrl = item["images"]["coverArt"]["url"]
-            posterUrl = posterUrl.replace("{w}", "300" )
-            posterUrl = posterUrl.replace("{h}", "600" )
-            posterUrl = posterUrl.replace("{f}", "jpg" )
-
-            backdropUrl = item["images"]["previewFrame"]["url"]
-            backdropUrl = backdropUrl.replace("{w}", "3840" )
-            backdropUrl = backdropUrl.replace("{h}", "2160" )
-            backdropUrl = backdropUrl.replace("{f}", "jpg" )
-
-            synoExtraItem = {
-                "com.ceviixx": {
-                    "rating": {
-                        "com.ceviixx": 10.0
-                    },
-                    "poster": [posterUrl],
-                    "backdrop": [backdropUrl]
-                }
-            }
-            synoEntryItem = {
-                "title": item["title"],
-                "tagline": "",
-                "original_available": releaseDate,
-                "original_title": item["title"],
-                "summary": item["description"],
-                "certificate": item["rating"]["displayName"],
-                "genre": ["GENRE"],
-                "actor": ["ACTOR"],
-                "director": ["DIRECTOR"],
-                "writer": ["WRITER"],
-                "extra": synoExtraItem
-            }
-
-
-
-            synoRes.append(synoEntryItem)
-
-    return synoRes
-
-
-
-
 
 
 
@@ -126,11 +64,38 @@ def main(type, language: str, input, limit: int, allowguess: bool):
     searchString = searchString.replace(' ', '+')
 
     if type == "movie":
-        return movieMeta(searchString, langCode, locale)
+        return movie.metaData(searchString, langCode, locale)
+    elif type == "tvshow":
+        return tvshow.metaData(searchString, "1", "1", langCode, locale)
     else:
         return errorData()
 
 
+
+def setupData(requestType):
+    synoExtraItem = {
+        "com.ceviixx": {
+            "rating": {
+                "com.ceviixx": 2.0
+            },
+            "poster": ["http://localhost.com/test.jpg"],
+            "backdrop": ["http://localhost.com/test.jpg"]
+        }
+    }
+    synoEntryItem = {
+        "title": requestType,
+        "tagline": "",
+        "original_available": "2024-01-01",
+        "original_title": "TITLE",
+        "summary": "DESCRIPTION",
+        "certificate": "FSK12",
+        "genre": ["GENRE"],
+        "actor": ["ACTOR"],
+        "director": ["DIRECTOR"],
+        "writer": ["WRITER"],
+        "extra": synoExtraItem
+    }
+    return [synoEntryItem]
 
 
 
@@ -153,33 +118,20 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    synoExtraItem = {
-        "com.ceviixx": {
-            "rating": {
-                "com.ceviixx": 2.0
-            },
-            "poster": ["http://localhost.com/test.jpg"],
-            "backdrop": ["http://localhost.com/test.jpg"]
-        }
-    }
-    synoEntryItem = {
-        "title": "TITLE",
-        "tagline": "",
-        "original_available": "2024-01-01",
-        "original_title": "TITLE",
-        "summary": "DESCRIPTION",
-        "certificate": "FSK12",
-        "genre": ["GENRE"],
-        "actor": ["ACTOR"],
-        "director": ["DIRECTOR"],
-        "writer": ["WRITER"],
-        "extra": synoExtraItem
-    }
+    
 
     result = []
 
     if "--setup" in args.input:
-        result = [synoEntryItem]
+        if args.type == "movie":
+            result = movie.setupData()
+        elif args.type == "tvshow":
+            result = tvshow.setupData()
+        elif args.type == "tvshow_episode":
+            result = tvshow_episode.setupData()
+        else:
+            result = setupData(args.type)
+            print(args.type)
     else:
         data = main(args.type, args.lang, args.input, args.limit, args.allowguess)
         result = data

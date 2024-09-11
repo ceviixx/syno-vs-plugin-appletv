@@ -7,8 +7,7 @@
 	"language": ["de-DE"],
 	"test_example": {
 		"movie": {
-			"title": "--setup",
-			"original_available": "1970-01-01"
+			"title": "--setup"
 		}
 	}
 }
