@@ -15,12 +15,12 @@ sh com.ceviixx/run.sh  \
 ```
 
 
-## Supported media types
+### Supported media types
 - [x] Movies
 - [ ] TV-Shows
 
 
-## Supported languages
+### Supported languages
 - [ ] Danish (dan)
 - [x] German (ger)
 - [ ] English (enu)
