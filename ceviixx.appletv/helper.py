@@ -17,9 +17,9 @@ def getLangCode(value):
 def errorData():
     synoRes = []
     synoExtraItem = {
-        "com.ceviixx": {
+        "ceviixx.appletv": {
             "rating": {
-                "com.ceviixx": 10.0
+                "com.rottentomatoes": 10.0
             },
             "poster": ["https://localhost/test.jpg"],
             "backdrop": ["https://localhost/test.jpg"]
@@ -45,9 +45,9 @@ def errorData():
 ### errorDataDisplay(requestType)
 def errorDataDisplay(requestType):
     synoExtraItem = {
-        "com.ceviixx": {
+        "ceviixx.appletv": {
             "rating": {
-                "com.ceviixx": 2.0
+                "com.rottentomatoes": 2.0
             },
             "poster": ["http://localhost.com/test.jpg"],
             "backdrop": ["http://localhost.com/test.jpg"]

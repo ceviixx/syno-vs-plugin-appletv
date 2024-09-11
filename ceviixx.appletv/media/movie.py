@@ -180,9 +180,9 @@ def metaData(searchString, langCode, locale):
             backdropUrl = backdropUrl.replace("{f}", "jpg" )
 
             synoExtraItem = {
-                "com.ceviixx": {
+                "ceviixx.appletv": {
                     "rating": {
-                        "com.ceviixx": 10.0
+                        "com.rottentomatoes": 10.0
                     },
                     "poster": [posterUrl],
                     "backdrop": [backdropUrl]

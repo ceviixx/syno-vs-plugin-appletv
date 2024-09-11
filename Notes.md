@@ -10,7 +10,7 @@
 ### INFO - file
 ```
 {
-	"id": "com.ceviixx",
+	"id": "ceviixx.appletv",
 	"description": "Load the metadata from the AppleTV Api",
 	"version": "1.1",
 	"entry_file": "run.sh",
