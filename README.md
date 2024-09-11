@@ -3,7 +3,7 @@ An Synology Video Station Plugin to fetch movie metadata from the **Apple TV**-A
 
 ### Test & build
 ```
-sh com.ceviixx/run.sh  \
+sh com.ceviixx.appletv/run.sh  \
     --type movie \
     --lang ger \
     --input "{\"title\":\"Toy Story\", \"original_available\": \"1995-11-22\"}" \
@@ -12,7 +12,7 @@ sh com.ceviixx/run.sh  \
 ```
 
 ```
-tar --no-xattrs -cvf com.ceviixx.tar com.ceviixx
+tar --no-xattrs -cvf com.ceviixx.appletv.tar com.ceviixx.appletv
 ```
 
 
