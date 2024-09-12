@@ -84,7 +84,6 @@ def _parseWriter(data):
 
 def detailsFor(entryId):
     url = "https://tv.apple.com/api/uts/v2/view/product/{}/?utscf=OjAAAAAAAAA~&utsk=000000000000000000&caller=web&sf=143443&v=40&pfm=web&locale=de-DE".format(entryId)
-    
     resp = requests.get(url)
     if resp.status_code != 200:
         exit("Response not valid for {}".format(entryId))
@@ -98,15 +97,12 @@ def detailsFor(entryId):
     releaseDate = _parseReleaseDate(content["releaseDate"])
     genres = _parseGenres(content["genres"])
     certificate = content["rating"]["displayName"]
-
     rating = 0
     if "tomatometerPercentage" in content:
         rating = content["tomatometerPercentage"]
-
     actor = _parseActor(roles)
     director = _parseDirector(roles)
     writer = _parseWriter(roles)
-
     images = content["images"]
     poster = _parsePoster(images)
     backdrop = _parseBackdrop(images)
@@ -133,7 +129,6 @@ def detailsFor(entryId):
         "writer": writer,
         "extra": synoExtraItem
     }
-
     return synoEntryItem
 
     
@@ -165,45 +160,5 @@ def metaData(searchString, langCode, locale):
             
             detailData = detailsFor(entryId)
             synoRes.append(detailData)
-            """
-            releaseDate = datetime.datetime.fromtimestamp( ( item["releaseDate"] / 1000 ) )
-            releaseDate = releaseDate.strftime('%Y-%m-%d')
-
-            posterUrl = item["images"]["coverArt"]["url"]
-            posterUrl = posterUrl.replace("{w}", "300" )
-            posterUrl = posterUrl.replace("{h}", "600" )
-            posterUrl = posterUrl.replace("{f}", "jpg" )
-
-            backdropUrl = item["images"]["previewFrame"]["url"]
-            backdropUrl = backdropUrl.replace("{w}", "3840" )
-            backdropUrl = backdropUrl.replace("{h}", "2160" )
-            backdropUrl = backdropUrl.replace("{f}", "jpg" )
-
-            synoExtraItem = {
-                "ceviixx.appletv": {
-                    "rating": {
-                        "com.rottentomatoes": 10.0
-                    },
-                    "poster": [posterUrl],
-                    "backdrop": [backdropUrl]
-                }
-            }
-            synoEntryItem = {
-                "title": item["title"],
-                "tagline": "",
-                "original_available": releaseDate,
-                "original_title": item["title"],
-                "summary": item["description"],
-                "certificate": item["rating"]["displayName"],
-                "genre": ["GENRE"],
-                "actor": ["ACTOR"],
-                "director": ["DIRECTOR"],
-                "writer": ["WRITER"],
-                "extra": synoExtraItem
-            }
-
-
-
-            synoRes.append(synoEntryItem)
-            """
+            
     return synoRes

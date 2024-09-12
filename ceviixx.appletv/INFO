@@ -4,7 +4,7 @@
 	"version": "1.1",
 	"entry_file": "run.sh",
 	"type": ["movie"],
-	"language": ["de-DE"],
+	"language": ["dan","ger"],
 	"test_example": {
 		"movie": {
 			"title": "--setup"
